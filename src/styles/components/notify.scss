@@ -1,0 +1,54 @@
+// .notify {
+//   position: relative;
+
+//   .heartbit {
+//     animation: heartbit 1.2s ease-out;
+//     animation-iteration-count: infinite;
+//     border: 5px solid map-get($notify, "notify");
+//     border-radius: 70px;
+//     box-sizing: border-box;
+//     height: 26px;
+//     position: absolute;
+//     right: -10px;
+//     top: -10px;
+//     width: 26px;
+//     z-index: 10;
+//   }
+
+//   .point {
+//     background-color: map-get($notify, "notify");
+//     border-radius: 30px;
+//     height: 6px;
+//     position: absolute;
+//     right: 0px;
+//     top: 0px;
+//     width: 6px;
+//   }
+// }
+
+// @-webkit-keyframes heartbit {
+//   0% {
+//     opacity: 0;
+//     -webkit-transform: scale(0);
+//   }
+
+//   25% {
+//     opacity: 0.15;
+//     -webkit-transform: scale(0.1);
+//   }
+
+//   50% {
+//     opacity: 0.3;
+//     -webkit-transform: scale(0.5);
+//   }
+
+//   75% {
+//     opacity: 0.45;
+//     -webkit-transform: scale(0.8);
+//   }
+
+//   100% {
+//     opacity: 0;
+//     -webkit-transform: scale(1);
+//   }
+// }

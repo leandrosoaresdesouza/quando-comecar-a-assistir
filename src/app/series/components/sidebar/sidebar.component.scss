@@ -1,0 +1,25 @@
+.wrapper-menu {
+  margin-top: 75px;
+
+  .menu {
+    .item {
+      color: #fff;
+
+      .active {
+        background-color: #232a31;
+        color: #c0515b;
+      }
+
+      a {
+        color: #fff;
+        display: block;
+        font-weight: 600;
+        padding: 10px 10px 10px 30px;
+
+        &:hover {
+          background-color: #232a31;
+        }
+      }
+    }
+  }
+}

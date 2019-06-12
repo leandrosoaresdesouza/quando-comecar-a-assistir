@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <div class="navbar-brand">
+      <h1 class="title">{{ title }}</h1>
+    </div>
+    <div class="profile" [matMenuTriggerFor]="menu">
+      <p class="name">Leandro Soares</p>
+      <img src="../../../../assets/user.jpeg" class="img-profile" alt="user-img-profile">
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>exit_to_app</mat-icon>
+    <span>Deslogar</span>
+  </button>
+</mat-menu>

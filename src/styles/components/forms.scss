@@ -1,0 +1,13 @@
+form {
+  > .full-width {
+    width: 100%;
+  }
+}
+
+.form-control {
+  border: 0;
+
+  &:focus {
+    box-shadow: none;
+  }
+}

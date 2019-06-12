@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-12 col-sm-6" *ngFor="let serie of series$" (click)="selectSerie(serie)">
+    <div class="serie" [ngClass]="{'active': serie.id == selectedSerie?.id}">
+      <div class="overlay">
+      </div>
+      <div class="wrapper-id">
+        <span class="id">{{ serie.id }}</span>
+      </div>
+      <p class="title">{{ serie.title }}</p>
+      <p class="seasons"> <span>Temporadas:</span> {{ serie.numberOfSeasons }}</p>
+      <p class="release-date"> <span>Lançamento:</span> {{ serie.releaseDate | date:'dd/MM/yyyy' }}</p>
+    </div>
+  </div>
+</div>

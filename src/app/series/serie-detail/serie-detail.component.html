@@ -1,0 +1,114 @@
+<div class="unselected" *ngIf="!selectedSerie else selected">
+  <p class="text">Nenhuma série selecionada</p>
+</div>
+<ng-template #selected>
+  <div class="wrapper-selected-serie">
+    <div class="row">
+      <div class="col-12 col-xl-4">
+        <div *ngIf="selectedSerie">
+          <h3 class="serie-title">Série: <span>{{ selectedSerie.title }}</span></h3>
+          <h4 class="serie-seasons">Temporadas: <span>{{ selectedSerie.numberOfSeasons }}</span></h4>
+        </div>
+        <div class="wrapper-series">
+          <mat-accordion *ngIf="seasons$.length > 0">
+            <mat-expansion-panel *ngFor="let season of seasons$" (click)="selectSeason(season)">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Temporada: {{ season.id }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <p class="info" *ngIf="season.releaseDate !== 'Invalid date'">Data de lançamento: <span>{{
+                  season.releaseDate | date:'dd/MM/yyyy' }}</span></p>
+              <p class="info">Episódios: <span>{{ season.numberOfEpisodes }}</span> </p>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <div class="col-12 col-xl-4">
+        <div *ngIf="selectedSeason">
+          <h3 class="season-title">Temporada: <span>{{ selectedSeason.id }}</span></h3>
+          <h4 class="season-episodes">Episódios: <span>{{ selectedSeason.numberOfEpisodes }}</span></h4>
+        </div>
+        <div class="wrapper-episodes" *ngIf="selectedSeason">
+          <input type="text" class="form-control" placeholder="Pesquise por Nome do Episódio" [(ngModel)]="searchTerm">
+          <mat-accordion *ngIf="episodes$.length > 0">
+            <mat-expansion-panel *ngFor="let episode of episodes$ | episodeFilter : searchTerm">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Episódio: {{ episode.id }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <p class="info">Nome: <span>{{ episode.title }}</span></p>
+              <p class="info" *ngIf="episode.releaseDate !== 'Invalid date'">Data de lançamento: <span>{{
+                  episode.releaseDate | date:'dd/MM/yyyy' }}</span></p>
+              <p class="info">Duração: <span>{{ episode.duration }}</span> </p>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <div class="col-12 col-xl-4">
+        <form name="form" [formGroup]="calculatorForm" (ngSubmit)="onSubmit(selectedSerie.id)">
+          <h1 mat-dialog-title>Calculadora</h1>
+          <div mat-dialog-content>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <mat-form-field class="full-width">
+                  <input matInput [min]="mockDate" [matDatepicker]="whenToStart" placeholder="Quando começar assistir"
+                    formControlName="whenToStart">
+                  <mat-datepicker-toggle matSuffix [for]="whenToStart"></mat-datepicker-toggle>
+                  <mat-datepicker #whenToStart></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-sm-6">
+                <mat-form-field class="full-width">
+                  <mat-label>Quantas horas por dia</mat-label>
+                  <input type="number" matInput formControlName="timePerDay" />
+                  <mat-error *ngIf="calculatorForm.controls.timePerDay.errors ">
+                    <mat-error *ngIf="calculatorForm.controls.timePerDay.errors.max">No máximo 24 horas</mat-error>
+                    <mat-error *ngIf="calculatorForm.controls.timePerDay.errors.min">Número negativo não é permitido</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="wrapper-action">
+            <button mat-flat-button color="primary" [disabled]="calculatorForm.invalid">Calcular</button>
+          </div>
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading" class="loading"></mat-progress-bar>
+          <div class="answer">
+            <p>{{ serieDurationString }}</p>
+            <p *ngIf="upcomingEpisode">
+              Próximo episódio será lançado: <strong>{{ upcomingEpisode | date: 'dd/MM/yyyy' }}</strong>
+            </p>
+
+            <p *ngIf="daysAvailableToWatch">
+              Você terá: <strong>{{ daysAvailableToWatch }}</strong> dias para assistir
+            </p>
+
+            <p *ngIf="resultWhenToStart && !serieIsOver">
+              Você precisará assistir: <strong>{{ timePerDayInHours }}</strong> horas e <strong>{{ timePerDayInMinutes
+                }} minutos por dia!</strong>
+            </p>
+
+            <p *ngIf="resultWhenToStart === false && !serieIsOver">
+              Não será possível assistir toda a série até a data de início do próximo episódio!
+            </p>
+
+            <p *ngIf="resultHoursPerDay && !serieIsOver">
+              Você poderá começar assistir: <strong>{{ dateToStart | date:'dd/MM/yyyy' }}</strong>!
+            </p>
+
+            <p *ngIf="resultHoursPerDay === false && !serieIsOver">
+              Assistindo: <strong>{{ timePerDayInHours }}</strong> horas e <strong>{{ timePerDayInMinutes }}</strong>
+              por dia, não será possível até a data de início do próximo episódio!
+            </p>
+
+            <p *ngIf="serieIsOver">
+              Nenhum episódio a ser lançado!
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>

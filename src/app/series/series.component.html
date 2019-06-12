@@ -1,0 +1,23 @@
+<app-header></app-header>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer [opened]="screenWidth > 768" [mode]="(screenWidth > 768) ? 'side' : 'over'" role="navigation">
+    <app-sidebar></app-sidebar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button mat-icon-button (click)="drawer.toggle()" class="drawer">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="title">Quando começar assistir</h1>
+    <h2 class="subtitle">Selecione uma série:</h2>
+
+    <div class="row">
+      <div class="col-12 col-xl-3">
+        <app-serie-list #serielist></app-serie-list>
+      </div>
+      <div class="col-12 col-xl-9">
+        <app-serie-detail [selectedSerie]="serielist.selectedSerie"></app-serie-detail>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
